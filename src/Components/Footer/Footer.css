@@ -1,0 +1,94 @@
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.custom-footer {
+    background-color: #282c34;
+    color: #61dafb;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.container1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    /* Center the columns */
+}
+
+.col-md-3 {
+    flex: 0 0 23%;
+}
+
+
+/* Footer Heading Styles */
+
+h4 {
+    font-size: 1.2rem;
+    /* Decreased font size */
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+
+/* Footer Paragraph Styles */
+
+p {
+    color: #fff;
+    /* Text color for paragraphs */
+}
+
+
+/* Footer Link Styles */
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #fd9a00;
+    /* Change color on hover (e.g., orange) */
+}
+
+
+/* Social Icons Styles */
+
+.social-icons i {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    color: #fff;
+    /* Set icon color to white */
+}
+
+
+/* Bottom Copyright Styles */
+
+p {
+    margin: 0;
+}
+
+
+/* Dark Overlay for Bottom Copyright */
+
+.custom-footer>div:last-child {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    width: 100%;
+    /* Make sure the overlay covers the entire width */
+    box-sizing: border-box;
+    /* Include padding and border in the element's total width and height */
+}

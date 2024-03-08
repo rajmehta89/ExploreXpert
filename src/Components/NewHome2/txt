@@ -1,0 +1,13 @@
+<div className="highlight-container">
+                        <div className="highlight-carousel">
+                            {displayImage(0)}
+                            {displayImage(1)}
+                            {displayImage(2)}
+                            {/* Add more displayImage calls as needed */}
+                        </div>
+                        &nbsp;&nbsp;
+                        <div className="nav-buttons">
+                            <button className="button prev" onClick={previousSlide}>{'<'}</button>
+                            <button className="button next" onClick={nextSlide}>{'>'}</button>
+                        </div>
+                    </div>

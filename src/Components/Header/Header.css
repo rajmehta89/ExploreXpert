@@ -1,0 +1,119 @@
+.d-flex {
+    background-color: transparent;
+    color: white;
+    padding: 10px 15px;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav li {
+    margin: 0 10px;
+}
+
+.nav-link {
+    background-color: transparent;
+    color: #61dafb;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: color 0.4s ease;
+}
+
+.nav-link:hover {
+    color: #fd9a00;
+}
+
+.form-control {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #fff;
+}
+
+.form-control:focus {
+    background-color: #fff;
+    color: #000;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    /* Adjust styles for screens less than or equal to 768px width */
+    .d-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav li {
+        margin: 10px 0;
+    }
+}
+
+/* Buttons Styles */
+.btn {
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-outline-light {
+    background-color: transparent;
+}
+
+.btn:hover {
+    color: #000;
+    background-color: #fff;
+}
+
+.btn-warning {
+    background-color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+    color: #fff !important;
+}
+.header-font{
+    font-weight: 600;
+}
+/* Header.css */
+
+.profile-icon {
+    width: 28%; /* Set the width of the profile icon */
+    height: 28%; /* Set the height of the profile icon */
+    border-radius: 50%; /* Make the profile icon circular */
+    object-fit: cover; /* Ensure the image covers the entire space */
+    margin-left: 10px; /* Add some margin for spacing */
+  }
+  
+  /* Responsive Styles */
+@media (max-width: 768px) {
+    .d-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav li {
+        margin: 10px 0;
+    }
+
+    .profile-icon {
+        width: 50px;
+        height: 50px;
+        margin-left: 0; /* Remove margin for profile icon */
+    }
+}
+

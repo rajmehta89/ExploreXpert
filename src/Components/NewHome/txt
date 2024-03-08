@@ -1,0 +1,30 @@
+const displayImage = (index) => {
+    const realIndex = (currentIndex + index) % slides.length;
+    return (
+        <div className="highlight-item">
+            <img src={slides[realIndex].image} alt={`Image ${realIndex}`} className="highlight-image" />
+            <p className="highlight-description">{slides[realIndex].highlightDescription}</p>
+        </div>
+    );
+};
+
+
+<div className="main-back" style={backgroundImageStyle}>
+            <Header />
+            <main className="main-content">
+                <div className="content-container">
+                    <h2 className="country-name">{slides[currentIndex].country}</h2>
+                    <p className="country-description">{slides[currentIndex].description}</p>
+                    <button className="explore-button">Explore &gt;</button>
+                </div>
+                <div className="highlight-container">
+                    <div className="highlight-carousel">
+                        {displayImage(0)}
+                        {displayImage(1)}
+                        {displayImage(2)}
+                        {/* Add more displayImage calls as needed */}
+                    </div>
+                    <button className="next-button" onClick={nextSlide}>Next</button>
+                </div>
+            </main>
+        </div>

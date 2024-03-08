@@ -1,0 +1,102 @@
+/* Home.css */
+
+.main-back1 {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../Assets/back.jpeg");
+}
+
+.hero-wrap {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center center;
+}
+
+.overall {
+    padding-bottom: 0 !important; /* Adjust as needed */
+}
+
+.city {
+    font-size: 8vh;
+    font-weight: bolder;
+    color: white; /* Adjust color as needed */
+    margin-bottom: 20px;
+}
+
+/* Home.css */
+
+.container2 {
+    display: flex; /* Set to flex */
+    flex-direction: row; /* Make form items horizontal */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+}
+
+.search1 {
+    background-color: rgba(255, 255, 255, 0); /* Adjust opacity and color as needed */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.form-field1 {
+    display: flex;
+    align-items: stretch; /* Ensure all children stretch to the same height */
+}
+
+.form-field1 > * {
+    flex: 1; /* Distribute available space equally */ /* Add some spacing between elements */
+}
+
+.form-field1 > *:last-child {
+    margin-right: 0; /* Remove margin from last child */
+}
+
+
+.overall{
+    margin-top: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-field1 input[type="text"],
+.form-field1 select {
+    flex: 1; /* Distribute available space equally */
+    padding-right: 15px;
+    padding-left: 15px;
+    border: 1px solid #ccc;
+}
+
+.form-control1{
+  width: 230px;
+}
+
+.btn-primary {
+    background-color: #007bff; /* Background color */
+    color: #fff; /* Text color */
+    border: none;
+    transition: background-color 0.3s ease;
+    padding: 10px 20px; /* Adjust padding */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* Remove underlines */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Background color on hover */
+}
+
+
+.searchBox{
+    width: "100%";
+    color:"white" 
+}
