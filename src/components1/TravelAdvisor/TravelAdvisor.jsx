@@ -13,7 +13,7 @@ const App = () => {
   const [coords, setCoords] = useState({});
   const [bounds, setBounds] = useState(null);
 
-  const [weatherData, setWeatherData] = useState([]);
+
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [places, setPlaces] = useState([]);
 
@@ -23,25 +23,26 @@ const App = () => {
 
   const navigate=useNavigate();
 
-  useEffect(() => {
-    const placeToGo = localStorage.getItem('selectedItem');
-    const retrivedplaceToGo = JSON.parse(placeToGo);
-    console.log(retrivedplaceToGo);
-    console.log(`latitude`, retrivedplaceToGo.lat);
-    console.log(`longitude`, retrivedplaceToGo.lon);
-  
-    // Parse strings to numbers before setting the coordinates
-    const latitude = parseFloat(retrivedplaceToGo.lat);
-    const longitude = parseFloat(retrivedplaceToGo.lon);
-  
-    setCoords({ lat: latitude, lng: longitude });
-  }, []);
-  
+    useEffect(() => {
+      const placeToGo = localStorage.getItem('selectedItem');
+      const retrivedplaceToGo = JSON.parse(placeToGo);
+      console.log(retrivedplaceToGo);
+      console.log(`latitude`, retrivedplaceToGo.lat);
+      console.log(`longitude`, retrivedplaceToGo.lon);
+    
+      // Parse strings to numbers before setting the coordinates
+      const latitude = parseFloat(retrivedplaceToGo.lat);
+      const longitude = parseFloat(retrivedplaceToGo.lon);
+    
+      setCoords({ lat: latitude, lng: longitude });
+    }, []);
+    
+    
 
-  useEffect(() => {
-    console.log('Coordinates set:', coords);
-    // You can perform additional actions based on the updated coords here
-  }, [coords]);
+    useEffect(() => {
+      console.log('Coordinates set:', coords);
+      // You can perform additional actions based on the updated coords here
+    }, [coords]);
 
      
   // const placeToGo=localStorage.getItem('selectedItem');
@@ -58,8 +59,7 @@ const App = () => {
     if (bounds) {
       setIsLoading(true);
 
-      getWeatherData(coords.lat, coords.lng)
-        .then((data) => setWeatherData(data));
+    
 
       getPlacesData(type, bounds.sw, bounds.ne)
         .then((data) => {
@@ -111,7 +111,7 @@ const App = () => {
             setCoords={setCoords}
             coords={coords}
             places={filteredPlaces.length ? filteredPlaces : places}
-            weatherData={weatherData}
+
           />
         </Grid>
       </Grid>

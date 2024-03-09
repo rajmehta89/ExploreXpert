@@ -1,0 +1,73 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.two-sided-container {
+  display: flex;
+  height: 100%; /* 100% of the viewport height */
+}
+
+.left-side-page6 {
+  width: 40%;
+  background-image: url("./beach.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds container height */
+  /* Optional background color */
+  /* Add your styles for the left side */
+}
+
+.pdfsavebutton-page6{
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: center;
+  margin:1.2rem auto;
+}
+
+.pdfsavebutton-page6 button{
+color: white;
+padding: 10px;
+background-color: grey;
+}
+
+.centered-text {
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(-90deg); /* Center and rotate text vertically */
+  color: white; /* Text color */
+  font-size: 60px; /* Adjust font size as needed */
+  white-space: nowrap;
+  overflow: hidden; /* Prevent text wrapping */
+}
+
+.right-side-page6 {
+  width: 60%;
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds container height */
+  /* Optional background color */
+  /* Add your styles for the right side */
+}
+
+.pdfheader-page6{
+  display: flex;
+  flex-direction: column;
+  background-color: #FBF9F1;
+  justify-content: center;
+  align-items: center;
+  color:'black';
+}
+
+.pdfheader-page6 h1{
+  margin:30px auto;
+  color: black;
+}
+
+.pdfheader-page6 p{
+  display: flex;
+  flex-direction: column;
+  gap:5px;
+  color: black;
+  font-size: 1.2rem;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}

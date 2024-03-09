@@ -11,13 +11,7 @@ import jsPDF from "jspdf";
 const TravelItinerary = () => {
 
     const pdfRef = useRef();
-    const [travelData,settravelData]=useState([]);
-
-    useEffect(()=>{
-      const gettraveldata=localStorage.getItem('ItenoryData');
-      const retriveddata=JSON.parse(gettraveldata);
-      settravelData(retriveddata);
-    });
+  
 
     const downloadButton = () => {
         const input = pdfRef.current;
@@ -69,7 +63,7 @@ const TravelItinerary = () => {
     </button>
     </div>
             
-    <div ref={pdfRef}>
+    <div ref={pdfRef} className="pdfmaincontainer">
 
       <header className="pdfheader">
         <h1>Ambition Trip</h1>
@@ -84,7 +78,7 @@ const TravelItinerary = () => {
       </header>
 
       <main className="pdfmain">
-        {travelData.map((dayData, index) => (
+     {/*   {travelData.map((dayData, index) => (
           <div key={index}>
             <div className='dayheader'><h3>{dayData.header}</h3></div>
             <Table
@@ -99,8 +93,7 @@ const TravelItinerary = () => {
               style={centeredCellStyle}
             />
           </div>
-        ))}
-
+            ))}   */}
         <div className="pdftravelinfo">
           {/* Cost Includes and Cost Excludes sections */}
 

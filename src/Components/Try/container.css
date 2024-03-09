@@ -1,0 +1,79 @@
+/* CardContainer.css */
+
+.card-container-page6 {
+    display: flex;
+    flex-direction: row;
+    margin:  3%;
+  }
+
+  .main-container-page6{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: #FBF9F1;
+  }
+
+
+  /* YourComponent.css */
+.ant-steps-item-title {
+    color: black; /* Set the desired text color for all steps */
+  }
+
+  /* Add this CSS to your stylesheet */
+
+  
+  .left-side2-page6{
+   width:20%;
+  }
+
+  .right-side2-page6 {
+    width: 80%;
+    
+  }
+
+  .right-side2-left-page6 {
+    height: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* row-gap: 0.5rem; */
+    margin-top: 3%;
+    font-weight: 2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+  
+ 
+  .day-box-page6{
+    background-color: transparent;
+    text-align: center;
+   display: flex;
+   align-items: start;
+   justify-content: center;
+    width:70%;
+    font-size: 1.2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    height: 70%;
+    /* border: 0.5rem solid #EADFB4; */
+    margin:10% 0 10% 10%;
+  }
+
+  .custom-steps .ant-steps-item-title {
+    font-size: 16px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+   
+  /* customSteps.css */
+.custom-steps .ant-steps-item-description {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; /* Change the font family */
+  font-size: 1.2rem; /* Change the font size */
+  color: '#5FBDFF'; /* Change the font color */
+}
+
+  
+  .day-info-page6 {
+    margin: 10px;
+  }

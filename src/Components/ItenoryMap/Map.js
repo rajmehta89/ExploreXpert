@@ -10,24 +10,23 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import L from "leaflet";
 import "leaflet-routing-machine";
+import placeIcon from './placeholder.png';
 
 const icon = L.icon({
-  iconUrl: "./placeholder.png",
+  iconUrl: placeIcon,
   iconSize: [38, 38],
 });
 
 function ResetCenterView(props) {
-  const { selectPosition, routingControl, setRoutingControl } = props;
+  const { selectPosition, routingControl, setRoutingControl, routingVisible, setRoutingVisible } = props;
   const map = useMap();
 
   useEffect(() => {
     if (routingControl && map && selectPosition) {
-      // Clear existing waypoints and set new ones
       routingControl.setWaypoints(selectPosition.map((place) =>
         L.latLng(place.lat, place.lon)
       ));
     } else if (!routingControl && map && selectPosition && selectPosition.length > 1) {
-      // Create a new routing control
       const newRoutingControl = L.Routing.control({
         waypoints: selectPosition.map((place) =>
           L.latLng(place.lat, place.lon)
@@ -37,19 +36,63 @@ function ResetCenterView(props) {
 
       setRoutingControl(newRoutingControl);
     }
-  }, [selectPosition, map, routingControl, setRoutingControl]);
+
+    if (routingControl) {
+      if (routingVisible) {
+        routingControl.show();
+      } else {
+        routingControl.hide();
+      }
+    }
+  }, [selectPosition, map, routingControl, setRoutingControl, routingVisible]);
 
   return null;
 }
 
 export default function Maps(props) {
   const { places, onDelete } = props;
+
   const [map, setMap] = useState(null);
   const [routingControl, setRoutingControl] = useState(null);
+  const [routingVisible, setRoutingVisible] = useState(true);
 
-  const handleMapCreated = (map) => {
-    setMap(map);
-  };
+  const [center, setCenter] = useState([23.3, 34.89]);
+  const [newcenter,setnewcenter]=useState([]);
+
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('selectedItem'));
+    const newCenter = [parseFloat(data.lat), parseFloat(data.lon)];
+    console.log(newCenter);
+    setnewcenter(newCenter);
+  
+    // Use the functional form of setCenter to ensure the latest state is used
+    setCenter(prevCenter => newCenter);
+    setnewcenter(newCenter);
+  
+    // Set a timeout to fly to the new center after a delay (e.g., 1000 milliseconds
+  }, [places, map]); // Listen for changes in 'places' data
+   // Update map center when 'center' changes
+
+
+   useEffect(()=>{
+    const timeoutId = setTimeout(() => {
+      if (map) {
+        console.log('Fly to new center:', newcenter);
+        map.flyTo(newcenter, 14, { animate: true });
+      }
+    }, 3000); // Adjust the timeout delay as needed
+  
+    // Cleanup function to ensure the flyTo is called only when the component is unmounted
+    return () => {
+      clearTimeout(timeoutId); // Clear the timeout if the component is unmounted before the timeout occurs
+      if (map) {
+        console.log('Set view on unmount:', newcenter);
+        map.setView(newcenter, 14); // Use setView instead of flyTo for cleanup
+      }
+    };
+   },[center]);
+
 
   const handleDeleteMarker = (place) => {
     const updatedPlaces = places.filter((p) => p !== place);
@@ -70,22 +113,19 @@ export default function Maps(props) {
     }
   };
 
+
+  const toggleRoutingVisibility = () => {
+    setRoutingVisible((prev) => !prev);
+  };
+
   return (
     <MapContainer
-      center={[51.505, -0.09]} // Initial center value
+    center={newcenter && newcenter.lat && newcenter.lng ? newcenter : center}
       zoom={6}
-      maxZoom={18}
+      maxZoom={18}  
       minZoom={3}
-   
       style={{ width: "100%", height: "100%" }}
-      whenCreated={handleMapCreated}
-      onViewportChanged={() => {
-        // Update center dynamically when the map is moved
-        if (map) {
-          const newCenter = map.getCenter();
-          map.setView(newCenter, map.getZoom(), { animate: false });
-        }
-      }}
+      whenCreated={(map) => setMap(map)}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -104,12 +144,19 @@ export default function Maps(props) {
             <Popup>
               <h2>{place.display_name}</h2>
             </Popup>
+            <div className="map-button-container">
+              <button className="map-button" onClick={toggleRoutingVisibility}>
+                Toggle Routing Visibility
+              </button>
+            </div>
           </Marker>
         ))}
       <ResetCenterView
         selectPosition={places}
         routingControl={routingControl}
         setRoutingControl={setRoutingControl}
+        routingVisible={routingVisible}
+        setRoutingVisible={setRoutingVisible}
       />
     </MapContainer>
   );

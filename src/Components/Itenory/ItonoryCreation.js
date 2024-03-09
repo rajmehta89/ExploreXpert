@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import DynamicList from './DynamicList';
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from 'react-router-dom';
-import jsPDF from "jspdf";
+
 
 function DynamicAccordion(props) {
   const { selectedPlaces, suggestionList, onSelectPlace,setSelectedPlaces ,setSuggestionList, customPlaces} = props;
+  
+
   const [accordionItems, setAccordionItems] = useState([
     {
       header: '5-January,2024',
@@ -34,6 +36,7 @@ function DynamicAccordion(props) {
   };
 
 
+
   const handleSave = (index, updatedItems) => {
     console.log('Before update:', accordionItems);
     console.log('updated item is:',updatedItems);
@@ -53,7 +56,7 @@ function DynamicAccordion(props) {
   const handleItenoryCreation = () => {
     console.log(accordionItems);
     localStorage.setItem('ItenoryData',JSON.stringify(accordionItems));
-    navigate('/ItenoryCreator');    
+    navigate('/Try');    
   };
 
   const handleAddAccordion = () => {

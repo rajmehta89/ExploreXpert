@@ -85,6 +85,28 @@ function App() {
   const [suggestionList, setSuggestionList] = useState(customPlaces);
   const [places,setPlaces]=useState([]);
   const [flattenedData, setFlattenedData] = useState([]);
+  const [coords,setCoords]=useState({});
+
+  
+  // useEffect(() => {
+  //   const placeToGo = localStorage.getItem('selectedItem');
+  //   const retrivedplaceToGo = JSON.parse(placeToGo);
+  //   console.log(retrivedplaceToGo);
+  //   console.log(`latitude`, retrivedplaceToGo.lat);
+  //   console.log(`longitude`, retrivedplaceToGo.lon);
+  
+  //   // Parse strings to numbers before setting the coordinates
+  //   const latitude = parseFloat(retrivedplaceToGo.lat);
+  //   const longitude = parseFloat(retrivedplaceToGo.lon);
+  
+  //   setCoords({ lat: latitude, lng: longitude });
+  // }, []);
+  
+
+  // useEffect(() => {
+  //   console.log('Coordinates set:', coords);
+  //   // You can perform additional actions based on the updated coords here
+  // }, [coords]);
 
   useEffect(()=>{
     const places=localStorage.getItem('myplaces');
@@ -149,7 +171,7 @@ function App() {
           />
         </Col>
         <Col xs={6} style={{ height: '100%', overflow: 'auto' }}>
-          <Maps places={selectedPlaces}/>
+          <Maps places={selectedPlaces} />
         </Col>
       </Row> 
 

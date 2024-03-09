@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 
-const PlaceDetails = ({ place, selected, refProp,user,setFavPlaces}) => {
+const PlaceDetails = ({ place, selected, refProp,setFavPlaces}) => {
 
   const { favplaces, setfavplaces}=useContext(context);
 

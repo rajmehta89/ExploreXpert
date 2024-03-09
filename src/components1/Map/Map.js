@@ -1,5 +1,5 @@
 import React from 'react';
-import GoogleMapReact from 'google-map-react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Paper, Typography, useMediaQuery } from '@material-ui/core';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import Rating from '@material-ui/lab/Rating';
@@ -11,77 +11,54 @@ const Map = ({ coords, places, setCoords, setBounds, setChildClicked, weatherDat
   const matches = useMediaQuery('(min-width:600px)');
   const classes = useStyles();
 
-  if (!places || !Array.isArray(places)) {
-    console.error('Invalid places data:', places);
-    return null;
-  }
-
-  console.log('my places......', places);
-
-  const handleMapChange = (e) => {
-    setCoords({ lat: e.center.lat, lng: e.center.lng });
-    setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
-  };
-
-  const handleMarkerClick = (child) => {
-    setChildClicked(places[child]);
-  };
+  // Provide default coordinates if coords is undefined
+  const defaultCoords = coords || { lat: 56.0, lng: 45.0 };
 
   return (
     <div className={classes.mapContainer}>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyCJ0JqAVGTmnOlCSZp4hnurF8zfnfSbwFw' }}
-        defaultCenter={coords}
-        center={coords}
-        defaultZoom={10}
-        margin={[50, 50, 50, 50]}
-        options={{ disableDefaultUI: true, zoomControl: true, styles: mapStyles }}
-        onChange={handleMapChange}
-        onChildClick={handleMarkerClick}
-      >
-        {places.map((place) => {
-          const position = {
-            lat: Number(place.latitude),
-            lng: Number(place.longitude),
-          };
-
-          if (isNaN(position.lat) || isNaN(position.lng)) {
-            console.error(`Invalid coordinates for place ${place.name}`, position);
-            return null;
+      <MapContainer
+        center={[defaultCoords.lat, defaultCoords.lng]}
+        zoom={14}
+        style={{ height: '100%', width: '100%' }}
+        whenCreated={(map) => {
+          // Check if coords is defined before setting the view
+          if (coords) {
+            map.setView([coords.lat, coords.lng], 14);
           }
+        }}
+        className={classes.leafletContainer}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
 
-          return (
-            <div
-              className={classes.markerContainer}
-              lat={position.lat}
-              lng={position.lng}
-              key={place.id}
-            >
+        {places.length && places.map((place, i) => (
+          <Marker
+            key={i}
+            position={[Number(place.latitude), Number(place.longitude)]}
+            eventHandlers={{
+              click: () => setChildClicked(place),
+            }}
+          >
+            <Popup>
               {!matches ? (
                 <LocationOnOutlinedIcon color="primary" fontSize="large" />
               ) : (
                 <Paper elevation={3} className={classes.paper}>
-                  <Typography className={classes.typography} variant="subtitle2" gutterBottom>
-                    {place.name}
-                  </Typography>
+                  <Typography className={classes.typography} variant="subtitle2" gutterBottom>{place.name}</Typography>
                   <img
                     className={classes.pointer}
-                    src={place.photo ? place.photo.images.large.url : 'https://www.example.com/placeholder.jpg'}
+                    src={place.photo ? place.photo.images.large.url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}
                     alt={place.name}
                   />
                   <Rating name="read-only" size="small" value={Number(place.rating)} readOnly />
                 </Paper>
               )}
-            </div>
-          );
-        })}
-
-        {weatherData?.list?.map((data, i) => (
-          <div key={i} lat={data.coord.lat} lng={data.coord.lon}>
-            <img src={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`} height="70px" alt="Weather icon" />
-          </div>
+            </Popup>
+          </Marker>
         ))}
-      </GoogleMapReact>
+      </MapContainer>
     </div>
   );
 };

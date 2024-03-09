@@ -15,6 +15,8 @@ import context from './Components/ReactContext.js';
 import ItonoryCreation from './Components/Itenory/Main.js';
 import PDFGenrator from './Components/PDFCreation/PDFCreation.js';
 
+import Try from './Components/Try/Try.js';
+
 import  {Provider} from 'react-redux';
 import store from './Components/Redux_management/store.js';
 
@@ -49,6 +51,8 @@ function App() {
           <Route path="/profile" element={<Profile/>} />
           <Route path="/ItenoryCreator" element={<PDFGenrator/>} />
           <Route path="/Itenory" element={<ItonoryCreation/>} />
+          <Route path="/Try" element={<Try/>} />
+       
         </Routes>
       </Router>
       </context.Provider>

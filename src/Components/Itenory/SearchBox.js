@@ -6,6 +6,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
+import PlaceholderImage from '../ItenoryMap/placeholder.png';
+
 
 const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
 const params = {
@@ -52,7 +54,7 @@ export default function SearchBox(props) {
                   >
                     <ListItemIcon>
                       <img
-                        src="../ItenoryMap/placeholder.png"
+                        src={ PlaceholderImage}
                         alt="Placeholder"
                         style={{ width: 38, height: 38 }}
                       />

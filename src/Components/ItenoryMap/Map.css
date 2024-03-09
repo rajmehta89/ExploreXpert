@@ -1,2 +1,36 @@
 /* Appropriate import for your CSS file */
 @import "~leaflet-routing-machine/dist/leaflet-routing-machine.css";
+
+/* Add this CSS to your stylesheet */
+
+/* Container for the button */
+.map-button-container {
+    position: absolute;
+    top: 5%; /* Adjust the top distance as needed */
+    right: 80%; /* Adjust the right distance as needed */
+    z-index: 1000; /* Ensure it's above other elements on the map */
+  }
+  
+  /* Style for the button */
+  .map-button {
+    background-color: red;
+    color: black;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  /* Responsive styling */
+  @media screen and (max-width: 600px) {
+    /* Adjust styles for smaller screens if needed */
+    .map-button-container {
+      top: 5%;
+      right: 80%;
+    }
+  
+    .map-button {
+      padding: 8px;
+    }
+  }
+  
