@@ -1,0 +1,163 @@
+@media screen and (max-width: 830px) {
+    .main_back {
+        background-color: #051622;
+      }
+    .main {
+        flex-direction: column;
+        align-items: center;
+    }
+    .side {
+        width: 100%;
+        border-radius: 0;
+        margin-top: 0;
+    }
+    .container {
+        width: 470px;
+        border-radius: 20px;
+        margin-top: 20px;
+        background-color: white;
+    }
+    .input input {
+        width: 100px;
+    }
+    .input {
+        width: 400px;
+    }
+    .password-reset-container {
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+    }
+    .password-reset-container input {
+        width: 150px;
+    }
+    .password-reset-container button {
+        width: 150px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .main_back {
+        background-color: #051622;
+   
+          }
+    .main {
+        flex-direction: column;
+        align-items: center;
+    }
+    .side {
+        width: 100%;
+        border-radius: 0;
+        margin-top: 0;
+    }
+    .container {
+        width: 400px;
+        border-radius: 20px;
+        margin-top: 20px;
+        background-color: white;
+    }
+    .input input {
+        width: 100px;
+    }
+    .input {
+        width: 300px;
+    }
+    .password-reset-container {
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+    }
+    .password-reset-container input {
+        width: 150px;
+    }
+    .password-reset-container button {
+        width: 130px;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .main_back {
+        background-color: #051622;
+       }
+    .main {
+        flex-direction: column;
+        align-items: center;
+    }
+    .side {
+        width: 100%;
+        border-radius: 0;
+        margin-top: 0;
+    }
+    .container {
+        width: 300px;
+        border-radius: 20px;
+        margin-top: 20px;
+        background-color: white;
+    }
+    .submit-container {
+        display: flex;
+        flex-direction: column;
+        /* Adjusted flex-direction for responsiveness */
+        gap: 10px;
+        margin: 20px auto;
+    }
+    .input input {
+        width: 100px;
+    }
+    .input {
+        width: 200px;
+        font-size: 30px;
+    }
+    .input_pass input::placeholder {
+        color: #ccc;
+        font-size: 0px;
+    }
+    .input_pass input {
+        width: 100px;
+    }
+    .input_pass {
+        width: 700px;
+    }
+    .passset {
+        display: flex;
+        flex-direction: row;
+        margin-right: 30px;
+        gap: 40px;
+    }
+    .input_pass .passtext::before {
+        content: "passward";
+        font-size: 0px;
+    }
+    .password-reset-container {
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        width: 300px;
+    }
+    .password-reset-container input {
+        width: 150px;
+    }
+    .password-reset-container button {
+        width: 130px;
+    }
+    .password-reset-container h2 {
+        margin-bottom: 10px;
+        color: #3c009d;
+        font-size: 25px;
+        align-items: center;
+        justify-content: center;
+    }
+    .password-reset-container .input {
+        margin-bottom: 15px;
+        margin-top: 0px;
+        width: 130px;
+    }
+    .password-reset-container input {
+        width: 130px;
+        padding: 10px;
+        margin-top: 5px;
+    }
+}

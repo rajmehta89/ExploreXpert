@@ -1,30 +1,94 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import DynamicList from './DynamicList';
 import Button from 'react-bootstrap/Button';
-import {useNavigate} from 'react-router-dom';
-
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import './ItoneryCreator.css';
+import axios from "axios";
 
 function DynamicAccordion(props) {
-  const { selectedPlaces, suggestionList, onSelectPlace,setSelectedPlaces ,setSuggestionList, customPlaces} = props;
-  
+  const { selectedPlaces, suggestionList, onSelectPlace, setSelectedPlaces, setSuggestionList, customPlaces } = props;
+  const navigate = useNavigate();
+  const [show, setShow] = useState(true);
 
-  const [accordionItems, setAccordionItems] = useState([
-    {
-      header: '5-January,2024',
-      itinerary: []
-    },
-    {
-      header: '6-January,2024',
-      itinerary: [],
-    },
-    {
-      header: '7-January,2024',
-      itinerary: [],
-    },
-  ]);
+  // Retrieve start and end dates from localStorage
 
-  const navigate=useNavigate();
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Get token from local storage
+        const token = localStorage.getItem("token");
+        console.log("token", token);
+
+        // Headers containing the JWT token for authentication
+        const headers = {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        };
+
+        // Make GET request to the backend route to fetch selected item with token in headers
+        const response = await axios.get('http://localhost:3001/user/api/getSelectedItem', { headers });
+
+        // Update state with fetched selected item
+        if (response.status === 200) {
+          const data = response.data.data;
+          console.log(data.startDate);
+          console.log(data.endDate);
+
+          if (data.startDate && data.endDate) {
+            console.log('User data fetched successfully:', response.data.data);
+            setStartDate(data.startDate);
+            setEndDate(data.endDate);
+            setAccordionItems(generateAccordionItems(data.startDate, data.endDate));
+          } else {
+            console.log("Start and end dates are empty.");
+          }
+        } else {
+          console.error('Failed to fetch user data:', response.data.error);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+
+    // Generate accordion items between start and end dates
+    const generateAccordionItems = (startDate, endDate) => {
+      if (!startDate || !endDate) {
+        return []; // Return empty array if start or end dates are empty
+      }
+
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+
+      console.log(startDate);
+      console.log(endDate);
+
+      const accordionItems = [];
+
+      while (start <= end) {
+        const formattedDate = `${start.getDate()}-${start.toLocaleString('default', { month: 'long' })},${start.getFullYear()}`;
+        accordionItems.push({
+          header: formattedDate,
+          itinerary: []
+        });
+
+        // Move to the next day
+        start.setDate(start.getDate() + 1);
+      }
+
+      return accordionItems;
+    };
+
+    // Call fetchData on component mount
+    fetchData();
+  }, []);
+
+  const [accordionItems, setAccordionItems] = useState([]);
 
   const handleAccordionItemClick = index => {
     setAccordionItems(prevItems =>
@@ -35,126 +99,130 @@ function DynamicAccordion(props) {
     );
   };
 
-
-
   const handleSave = (index, updatedItems) => {
-    console.log('Before update:', accordionItems);
-    console.log('updated item is:',updatedItems);
-    
-    setAccordionItems((prevItems) =>
+    setAccordionItems(prevItems =>
       prevItems.map((item, i) => ({
         ...item,
         itinerary: index === i ? updatedItems : item.itinerary,
       }))
     );
-  
-    console.log('After update:', accordionItems);
   };
-  
 
+  const handleItenoryCreation = async () => {
+    setShow(!show);
+    toast.success("Itinerary created successfully!");
+    localStorage.setItem('ItenoryData', JSON.stringify(accordionItems));
 
-  const handleItenoryCreation = () => {
-    console.log(accordionItems);
-    localStorage.setItem('ItenoryData',JSON.stringify(accordionItems));
-    navigate('/Try');    
+    try {
+
+      // Get token from local storage
+      const token = localStorage.getItem("token");
+
+      // Headers containing the JWT token for authentication
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+
+      // Backend API endpoint URL
+      const apiUrl = 'http://localhost:3001/user/api/storeAccordionData';
+
+      console.log(accordionItems);
+
+      // Making a POST request to the server
+      const response = await axios.post(apiUrl, { accordionItems }, { headers });
+
+      // If the token is verified and data is stored successfully
+      if (response.status === 200) {
+        console.log('Data stored successfully!');
+        navigate('/ItineraryGenerator');
+      } else {
+        console.error('Failed to store data.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const handleAddAccordion = () => {
-    const dataforDMY = accordionItems[accordionItems.length - 1]?.header;
-    // Convert to string and split
-    const parts = dataforDMY?.toString().split('-') || [];
-    console.log(parts);
-
-    // Check if the header is in the expected format
-    if (parts.length === 2) {
-      const date = parts[0];
-      const [lastMonth, lastyear] = parts[1].split(',');
-
-      const lastDate = new Date(`${lastMonth} ${date}, ${lastyear}`);
-
-      const nextDate = new Date(lastDate);
-      nextDate.setDate(lastDate.getDate() + 1);
-
-      const nextDay = nextDate.getDate();
-      const nextMonth = nextDate.toLocaleString('default', { month: 'long' });
-      const nextYear = nextDate.getFullYear();
-
-      // Calculate next date, month, and year here (as shown in the previous response)
-      const nextHeader = `${nextDay}-${nextMonth},${nextYear}`;
-
-      // Update the accordionItems state with the new accordion
-      setAccordionItems(prevItems => [
-        ...prevItems,
-        {
-          header: nextHeader,
-          content: 'There are no activities for this day yet',
-          itinerary: [],
-        },
-      ]);
-    } else {
-      // Handle the case where the header is not in the expected format
-      console.error('Unexpected format for accordion header:', dataforDMY);
+    if (!startDate || !endDate) {
+      // Show UI error if start or end date is missing
+      alert('Please select start and end dates for the itinerary.');
+      return;
     }
+
+    // Find the last date in the accordion items
+    const lastItem = accordionItems[accordionItems.length - 1];
+    const [date, monthYear] = lastItem.header.split('-');
+    const [month, year] = monthYear.split(',');
+
+    // Parse the current date
+    const currentDate = new Date(`${month.trim()} ${parseInt(date)}, ${parseInt(year)}`);
+
+    // Calculate the next date
+    const nextDate = new Date(currentDate);
+    nextDate.setDate(nextDate.getDate() + 1);
+
+    // Check if the next date is in the next month or year
+    let nextMonth = nextDate.getMonth();
+    let nextYear = nextDate.getFullYear();
+
+    // If the next month is January and it's different from the current month, increment the year
+    if (nextMonth === 0 && nextMonth !== currentDate.getMonth()) {
+      nextYear++;
+    }
+
+    // Format the next date
+    let nextMonthName = nextDate.toLocaleString('default', { month: 'long' });
+    let nextFormattedDate = `${nextDate.getDate()}-${nextMonthName},${nextYear}`;
+
+    toast.success(`${nextFormattedDate} added`);
+    // Add the next date to the accordion items
+    setAccordionItems(prevItems => [
+      ...prevItems,
+      {
+        header: nextFormattedDate,
+        itinerary: [],
+      },
+    ]);
   };
 
   return (
     <div>
-      {accordionItems.map((item, index) => (
-        <Accordion 
+      {show ? accordionItems.map((item, index) => (
+        <Accordion
           key={index}
           activeKey={item.isOpen ? index.toString() : undefined}
           flush
-          >
-         
-          <Accordion.Item eventKey={index.toString()}>
-            <Accordion.Header onClick={() => handleAccordionItemClick(index)}>
+        >
+          <Accordion.Item eventKey={index.toString()} style={{ backgroundColor: 'white' }}>
+            <Accordion.Header onClick={() => handleAccordionItemClick(index)} style={{ color: 'black' }}>
               {item.header}
             </Accordion.Header>
             <Accordion.Body>
               <DynamicList
-              items={item.itinerary}
-             setItems={(updatedItems) => handleSave(index, updatedItems)}
-             selectedPlaces={selectedPlaces}
-             suggestionList={suggestionList}
-             onSelectPlace={onSelectPlace}
-             setSelectedPlaces={setSelectedPlaces}
-             setSuggestionList={ setSuggestionList}
-             customPlaces={customPlaces}
+                items={item.itinerary}
+                setItems={(updatedItems) => handleSave(index, updatedItems)}
+                selectedPlaces={selectedPlaces}
+                suggestionList={suggestionList}
+                onSelectPlace={onSelectPlace}
+                setSelectedPlaces={setSelectedPlaces}
+                setSuggestionList={setSuggestionList}
+                customPlaces={customPlaces}
               />
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
-      ))}
+      )) : 'Itinerary Is Created here..'}
 
-      <Button
-        onClick={handleAddAccordion}
-        style={{
-          marginTop:'20px',
-          marginRight:'10px',
-          cursor: 'pointer',
-          color: 'white',
-          padding: '10px 12px',
-          borderRadius: '4px',
-          marginLeft: '10px',
-        }}
-      >
-        Add New Date
-      </Button>
-
-      <Button
-        onClick={handleItenoryCreation}
-        style={{
-          marginTop:'20px',
-          cursor: 'pointer',
-    
-          color: 'white',
-          padding: '10px 12px',
-          borderRadius: '4px',
-          marginLeft: '10px',
-        }}
-      >
-        Make An Itenory
-      </Button>
+      <div className='setplaces-buttons-page5'>
+        <div className='button1-page5' onClick={handleAddAccordion}>
+          Add New Date
+        </div>
+        <div className='button2-page5' onClick={handleItenoryCreation}>
+          {show ? 'Make An Itinerary' : 'Edit-An-Itinerary'}
+        </div>
+      </div>
     </div>
   );
 }

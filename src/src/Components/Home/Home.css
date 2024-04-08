@@ -1,0 +1,14 @@
+.contai {
+    display: flex;
+    flex-direction: row;
+}
+
+.side1 {
+    width: 50%;
+    height: 100vh;
+}
+
+.side2 {
+    width: 50%;
+    height: 100vh;
+}

@@ -1,0 +1,402 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    max-width: 1100px;
+    margin: 40px 20px;
+    /* Adjusted margin for responsiveness */
+}
+
+.main_back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    background-size: cover;
+    background-image: url("../Assets/back.png");
+    backdrop-filter: blur(10px);
+}
+
+.sign-text {
+    font-size: 2rem;
+    color: #3c009d;
+}
+
+.side {
+    width: 40rem;
+    /* Adjusted width for responsiveness */
+    background-image: url('../Assets/side.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    background-size: cover;
+    margin-top: 20px;
+    /* Adjusted margin for responsiveness */
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    /* Adjusted margin for responsiveness */
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    /* Adjusted width for responsiveness */
+    padding: 20px;
+    height: auto;
+    /* Adjusted height for responsiveness */
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 21px;
+}
+
+.text {
+    color: #3c009d;
+    font-size: 48px;
+    font-weight: 700;
+}
+
+.underline {
+    height: 6px;
+    width: 6px;
+    background: #3c009d;
+    border-radius: 9px;
+}
+
+.inputs {
+    margin-top: 20px;
+    /* Adjusted margin for responsiveness */
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    height: auto;
+    /* Adjusted height for responsiveness */
+}
+
+.input {
+    display: flex;
+    flex-direction: row;
+    /* Adjusted flex-direction for responsiveness */
+    align-items: center;
+    width: 100%;
+    /* Adjusted width for responsiveness */
+    background: #eaeaea;
+    border-radius: 30px;
+}
+
+.input img {
+    margin: 10px 20px;
+    /* Adjusted margin for responsiveness */
+}
+
+.input input {
+    height: 45px;
+    width: 100%;
+    /* Adjusted width for responsiveness */
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #797979;
+    font-size: 19px;
+}
+
+.forgot-passward {
+    padding-left: 20px;
+    /* Adjusted padding for responsiveness */
+    margin-top: 15px;
+    /* Adjusted margin for responsiveness */
+    color: #797979;
+    font-size: 18px;
+}
+
+.forgot-passward span {
+    color: #4c00b4;
+    cursor: pointer;
+}
+
+.submit-container {
+    display: flex;
+    flex-direction: row;
+    /* Adjusted flex-direction for responsiveness */
+    gap: 20px;
+    margin: 20px auto;
+}
+
+
+/* Add these styles to your existing CSS file or create a new one */
+
+.password-reset-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    /* Adjusted margin for responsiveness */
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    /* Adjusted width for responsiveness */
+    padding: 20px;
+    height: auto;
+    align-items: center;
+    /* Adjusted height for responsiveness */
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.password-reset-container h2 {
+    margin-bottom: 10px;
+    color: #3c009d;
+    font-size: 30px;
+}
+
+.password-reset-container .input {
+    margin-bottom: 15px;
+    margin-top: 30px;
+}
+
+.password-reset-container input {
+    width: 150px;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.password-reset-container button {
+    width: 200px;
+    padding: 10px;
+    background-color: #3c009d;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.password-reset-container button:hover {
+    background-color: #0056b3;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    /* Adjusted width for responsiveness */
+    height: 45px;
+    color: #fff;
+    background: #4c00b4;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.gray {
+    background: #EAEAEA;
+    color: #676767;
+}
+
+
+/* Media query for smaller screens */
+
+@media screen and (max-width: 1150px) and (min-width:830px) {
+    .side {
+        width: 20rem;
+        /* Adjusted width for responsiveness */
+        background-image: url('../Assets/side.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        background-size: cover;
+        margin-top: 20px;
+        /* Adjusted margin for responsiveness */
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        /* Adjusted margin for responsiveness */
+        background-color: rgba(255, 255, 255, 0.5);
+        width: 30rem;
+        /* Adjusted width for responsiveness */
+        padding: 20px;
+        height: auto;
+        /* Adjusted height for responsiveness */
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+}
+
+@media screen and (max-width: 830px) {
+    .main_back {
+        background-image: url("../Assets/back_responsive.jpg");
+    }
+    .main {
+        flex-direction: column;
+        align-items: center;
+    }
+    .side {
+        width: 100%;
+        border-radius: 0;
+        margin-top: 0;
+    }
+    .container {
+        width: 470px;
+        border-radius: 20px;
+        margin-top: 20px;
+        background-color: white;
+    }
+    .input input {
+        width: 100px;
+    }
+    .input {
+        width: 400px;
+    }
+    .password-reset-container {
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+    }
+    .password-reset-container input {
+        width: 150px;
+    }
+    .password-reset-container button {
+        width: 150px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .main_back {
+        background-image: url("../Assets/back_responsive.jpg");
+    }
+    .main {
+        flex-direction: column;
+        align-items: center;
+    }
+    .side {
+        width: 100%;
+        border-radius: 0;
+        margin-top: 0;
+    }
+    .container {
+        width: 400px;
+        border-radius: 20px;
+        margin-top: 20px;
+        background-color: white;
+    }
+    .input input {
+        width: 100px;
+    }
+    .input {
+        width: 300px;
+    }
+    .password-reset-container {
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+    }
+    .password-reset-container input {
+        width: 150px;
+    }
+    .password-reset-container button {
+        width: 130px;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .main_back {
+        background-image: url("../Assets/back_responsive.jpg");
+    }
+    .main {
+        flex-direction: column;
+        align-items: center;
+    }
+    .side {
+        width: 100%;
+        border-radius: 0;
+        margin-top: 0;
+    }
+    .container {
+        width: 300px;
+        border-radius: 20px;
+        margin-top: 20px;
+        background-color: white;
+    }
+    .submit-container {
+        display: flex;
+        flex-direction: column;
+        /* Adjusted flex-direction for responsiveness */
+        gap: 10px;
+        margin: 20px auto;
+    }
+    .input input {
+        width: 100px;
+    }
+    .input {
+        width: 200px;
+        font-size: 30px;
+    }
+    .input_pass input::placeholder {
+        color: #ccc;
+        font-size: 0px;
+    }
+    .input_pass input {
+        width: 100px;
+    }
+    .input_pass {
+        width: 700px;
+    }
+    .passset {
+        display: flex;
+        flex-direction: row;
+        margin-right: 30px;
+        gap: 40px;
+    }
+    .input_pass .passtext::before {
+        content: "passward";
+        font-size: 0px;
+    }
+    .password-reset-container {
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        width: 300px;
+    }
+    .password-reset-container input {
+        width: 150px;
+    }
+    .password-reset-container button {
+        width: 130px;
+    }
+    .password-reset-container h2 {
+        margin-bottom: 10px;
+        color: #3c009d;
+        font-size: 25px;
+        align-items: center;
+        justify-content: center;
+    }
+    .password-reset-container .input {
+        margin-bottom: 15px;
+        margin-top: 0px;
+        width: 130px;
+    }
+    .password-reset-container input {
+        width: 130px;
+        padding: 10px;
+        margin-top: 5px;
+    }
+}

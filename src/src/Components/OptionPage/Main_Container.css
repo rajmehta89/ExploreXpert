@@ -1,0 +1,24 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.main_contain {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.side1 {
+    width: 50%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.side2 {
+    width: 50%;
+    height: 100%;
+    overflow-y: auto;
+}

@@ -1,0 +1,137 @@
+import React, { useContext } from 'react';
+import { Box, Typography, Button, Card, CardMedia, CardContent, CardActions, Chip } from '@material-ui/core';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import PhoneIcon from '@material-ui/icons/Phone';
+import Rating from '@material-ui/lab/Rating';
+import context from '../../Components/ReactContext.js';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { message } from 'antd';
+
+import { connect } from 'react-redux';
+import { setFavPlaces } from '../../Components/store/actions.js';
+import useStyles from './styles.js';
+
+const mapStateToProps = (state) => ({
+  favplaces: state.user.favplaces, // Assuming 'favplaces' is a top-level property in your state
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setFavPlaces: (user) => dispatch(setFavPlaces(user)),
+});
+
+const PlaceDetails = ({ place, favplaces, setFavPlaces }) => {
+  const handleSelectfavPlace = async (selectedplace, event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    // Check if favplaces is defined and not null
+    if (favplaces && favplaces.length > 0) {
+      // Check if the selected place already exists in the favorites
+      const placeExists = favplaces.some((place) => place.location_id === selectedplace.location_id);
+
+      if (!placeExists) {
+        // If the place does not exist, add it to the favorites
+        const updatedData = [...favplaces, selectedplace];
+
+        try {
+          // Backend API endpoint URL
+          const apiUrl = 'http://localhost:3001/user/api/storeFavPlaces';
+
+          // Making a POST request to the server
+          const response = await axios.post(apiUrl, { favoritePlaces: updatedData });
+
+          // If the token is verified and data is stored successfully
+          if (response.status === 200) {
+            console.log('Data stored successfully!');
+            toast.success('Added');
+            // Update Redux store
+            setFavPlaces(updatedData);
+          } else {
+            console.error('Failed to store data.');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      } else {
+        message.info('Already added to favourites');
+        console.log('Place is already exists');
+      }
+    } else {
+      // Handle case where favplaces is not defined or empty
+      console.error('favplaces is not defined or empty');
+    }
+  };
+
+  const classes = useStyles();
+
+  return (
+    <Card elevation={6}>
+      <CardMedia
+        style={{ height: 350 }}
+        image={
+          place.photo
+            ? place.photo.images.large.url
+            : 'https://th.bing.com/th/id/OIP.Rrb9g7vA7vQwTUggDXHiOQHaE8?rs=1&pid=ImgDetMain'
+        }
+        title={place.name}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5">
+          {place.name}
+        </Typography>
+        <Box display="flex" justifyContent="space-between" my={2}>
+          <Rating name="read-only" value={Number(place.rating)} readOnly />
+          <Typography component="legend">{place.num_reviews} review{place.num_reviews > 1 && 's'}</Typography>
+        </Box>
+        <Box display="flex" justifyContent="space-between">
+          <Typography component="legend">Price</Typography>
+          <Typography gutterBottom variant="subtitle1">
+            {place.price_level}
+          </Typography>
+        </Box>
+        <Box display="flex" justifyContent="space-between">
+          <Typography component="legend">Ranking</Typography>
+          <Typography gutterBottom variant="subtitle1">
+            {place.ranking}
+          </Typography>
+        </Box>
+        {place?.awards?.map((award) => (
+          <Box display="flex" justifyContent="space-between" my={1} alignItems="center" key={award.display_name}>
+            <img src={award.images.small} />
+            <Typography variant="subtitle2" color="textSecondary">
+              {award.display_name}
+            </Typography>
+          </Box>
+        ))}
+        {place?.cuisine?.map(({ name }) => (
+          <Chip key={name} size="small" label={name} className={classes.chip} />
+        ))}
+        {place.address && (
+          <Typography gutterBottom variant="body2" color="textSecondary" className={classes.subtitle}>
+            <LocationOnIcon />
+            {place.address}
+          </Typography>
+        )}
+        {place.phone && (
+          <Typography variant="body2" color="textSecondary" className={classes.spacing}>
+            <PhoneIcon />
+            {place.phone}
+          </Typography>
+        )}
+      </CardContent>
+      <CardActions>
+        <Button size="small" color="primary" onClick={() => window.open(place.web_url, '_blank')}>
+          Trip Advisor
+        </Button>
+        <Button size="small" color="primary" onClick={() => window.open(place.website, '_blank')}>
+          Website
+        </Button>
+        <Button size="small" color="primary" onClick={(event) => { handleSelectfavPlace(place, event) }}>
+          Add TO Favorites
+        </Button>
+      </CardActions>
+    </Card>
+  );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceDetails);

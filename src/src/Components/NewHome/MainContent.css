@@ -1,0 +1,134 @@
+.main-back {
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("../Assets/image.jpeg");
+}
+
+.main-content {
+  display: flex;
+  flex-direction: row; /* Keep content in a row */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+  min-height: 100vh;
+  position: relative;
+}
+
+.content-container {
+  grid-column: span 1; /* Span 1 column for 50% width */
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the start (left) */
+  margin-left: 2rem;
+}
+
+
+.country-name {
+  font-size: 6rem;
+  font-weight: bold;
+  color: white;
+  justify-content: center;
+  /* Center text horizontally */
+}
+
+.country-description {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  /* Remove text-align property */
+}
+
+/* Explore button styles */
+.explore-button {
+  background-color: #343cd9; /* Change background color */
+  color: #fff; /* Text color */
+  padding: 12px 24px; /* Padding */
+  text-decoration: none; /* Remove underline */
+  font-size: 18px; /* Font size */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Hover cursor */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+/* Hover effect on explore button */
+.explore-button:hover {
+  background-color: #5548b9; /* Darker background color on hover */
+}
+
+
+.highlight-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+}
+
+.highlight-carousel {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+}
+
+/* MainContent.css */
+
+.highlight-item {
+  flex-basis: calc(33% - 1rem); /* Adjust based on the number of items you want to display */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 270px; /* Set width */
+  height: auto; /* Set height */
+  margin-right: 20px; /* Add margin between items */
+}
+
+.highlight-item:last-child {
+  margin-right: 0; /* Remove margin from the last item to prevent extra space */
+}
+
+/* Optional: Add custom scrollbar styles for WebKit */
+::-webkit-scrollbar {
+  display: none;
+}
+
+.highlight-item.active {
+  opacity: 1.5;
+  transform: scale(1.1);
+  width: 410px;
+}
+
+.highlight-image {
+    width: 100%; /* Set the width of the image to fill its container */
+    height: 100%; /* Allow the image to maintain its aspect ratio */
+    border-radius: 5px; /* Add rounded corners */
+}
+
+.highlight-description {
+  font-size: 0.9rem;
+  text-align: center;
+  color: white;
+  margin-top: 0.5rem;
+}
+
+.next-button {
+  align-self: center;
+  background-color: #333;
+  color: white;
+  padding: 12px 24px;
+  text-decoration: none;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.next-button:hover {
+  background-color: #555;
+}
+

@@ -1,0 +1,152 @@
+/* Global styles */
+.header {
+    background-color: transparent;
+    color: white;
+    padding: 0.5vw 0.5vw; /* Responsive padding */
+    position: relative; /* Ensure position context for dropdown */
+    height: 80px; /* Set a fixed height for the header */
+  }
+  
+  .nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative; /* Ensure position context for dropdown */
+  }
+  
+  .nav li {
+    margin: 0 1vw; /* Responsive margin */
+  }
+  
+  .nav-link {
+    background-color: transparent;
+    color: #61dafb;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5vw; /* Responsive font size */
+    padding: 1.5vw 2vw; /* Responsive padding */
+    text-decoration: none;
+    transition: color 0.4s ease;
+  }
+  
+  .form-control {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #fff;
+  }
+  
+  .form-control:focus {
+    background-color: #fff;
+    color: #000;
+  }
+  
+  .toggle-button {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.4s ease;
+    font-weight: 500;
+    font-size: 3vw;
+    display: none; /* Initially hide the toggle button */
+  }
+  
+  /* Dropdown menu */
+  .dropdown-menu {
+    position: absolute;
+    top: 100%; /* Position below the parent */
+    left: 0;
+    background-color: #fff;
+    z-index: 1000; /* Ensure dropdown appears above other content */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    visibility: hidden; /* Initially hide the dropdown */
+    opacity: 0; /* Hide the dropdown */
+    transition: visibility 0s, opacity 0.5s;
+  }
+  
+  .dropdown:hover .dropdown-menu {
+    visibility: visible; /* Show dropdown on hover */
+    opacity: 1; /* Show the dropdown */
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .d-flex {
+      flex-direction: row;
+      align-items: center;
+      padding: 0.5vw; /* Responsive padding */
+    }
+  
+    .nav {
+      flex-direction: column;
+      text-align: center;
+      display: none; /* Hide the nav links by default */
+    }
+  
+    .nav.show {
+      display: flex; /* Show the nav links when the show class is applied */
+    }
+  
+    .nav li {
+      margin: 5vw 0; /* Responsive margin */
+    }
+  
+    .profile-icon1 {
+      display: none; /* Hide the profile icon */
+    }
+  
+    .toggle-button {
+      display: block; /* Show the toggle button */
+    }
+  }
+  
+  /* Buttons Styles */
+  .btn {
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .btn-outline-light {
+    background-color: transparent;
+  }
+  
+  .btn:hover {
+    color: #000;
+    background-color: #fff;
+  }
+  
+  .btn-warning {
+    background-color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+    color: #fff !important;
+  }
+  
+  .header-font {
+    font-weight: 600;
+    font-size: 2.5vw;
+    color: white;
+  }
+  
+  .button1 {
+    font-size: 3vw; /* Responsive font size */
+    font-weight: bold;
+    color: white;
+  }
+  
+  .profile-icon1 {
+    width: 6vw; /* Responsive width */
+    height: 6vw; /* Responsive height */
+    border-radius: 50%;
+  }
+  
+  .options-logo {
+    width: 3vw; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+  }
+  

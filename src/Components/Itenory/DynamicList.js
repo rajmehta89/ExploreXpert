@@ -1,227 +1,250 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { Tooltip } from 'antd';
 import SearchBox from './SearchBox';
 import './DynamicList.css';
+import { toast } from 'react-toastify';
+import { TimePicker } from 'antd';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import moment from 'moment';
 
-
-const DynamicListComponent = ({ items, setItems ,selectedPlaces, suggestionList, onSelectPlace,setSelectedPlaces, setSuggestionList, customPlaces}) => {
-
+const DynamicListComponent = ({ items, setItems, selectedPlaces, suggestionList, onSelectPlace, setSelectedPlaces, setSuggestionList, customPlaces }) => {
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
   const [newPlace, setNewPlace] = useState('');
   const [itinerary, setItinerary] = useState([]);
-  const [selectedStartTime, setSelectedStartTime] = useState('00:00');
-  const [selectedEndTime, setSelectedEndTime] = useState('00:00');
-
+  const [startValue, setStartValue] = useState(null);
+  const [endValue, setEndValue] = useState(null);
+  const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
+  const [show, setShow] = useState(true);
 
   const handleDeleteCard = (index, item) => {
-    setItinerary((prevItinerary) =>
+    setItinerary(prevItinerary =>
       prevItinerary.filter((eachitem, i) => i !== index)
     );
-   
 
     const matchingPlaces = customPlaces.filter(
-      (place) => place.display_name === item.place
+      place => place.display_name === item.place
     );
-    
-    setSelectedPlaces((prevSelectedPlaces) =>
+
+    setSelectedPlaces(prevSelectedPlaces =>
       prevSelectedPlaces.filter(
-        (eachItem) => !matchingPlaces.some((match) => match.display_name === eachItem.display_name)
+        eachItem =>
+          !matchingPlaces.some(
+            match => match.display_name === eachItem.display_name
+          )
       )
     );
-    
-    setSuggestionList((prevSuggestionList) => [
+
+    setSuggestionList(prevSuggestionList => [
       ...prevSuggestionList,
       ...matchingPlaces,
     ]);
 
-    setTimeout(() => {
-    }, 1500);
-   
-
-    console.log(itinerary);
     setSelectedItemIndex(null);
   };
-  
+
   const handleSaveItenory = () => {
-
-    setItinerary((prevItinerary) => [
-      ...prevItinerary,
-      {
-        place: newPlace,
-        startTime: selectedStartTime,
-        endTime: selectedEndTime,
-      },
-    ]);
-
-    setNewPlace('');
+    // Check if the new place exists in the custom places array
+    const isPlaceInCustomPlaces = customPlaces.some(
+      place => place.display_name === newPlace
+    );
+  
+    if (isPlaceInCustomPlaces) {
+      setItinerary(prevItinerary => [
+        ...prevItinerary,
+        {
+          place: newPlace,
+          startTime: startValue ? startValue.format('HH:mm') : '00:00',
+          endTime: endValue ? endValue.format('HH:mm') : '00:00',
+        },
+      ]);
+  
+      // Get the current date
+      const currentDate = moment().format('YYYY-MM-DD');
+      
+      // Show toast message for added place including the date
+      toast.success(`${newPlace} is added on ${currentDate}`);
+  
+      setNewPlace('');
+      setIsTimePickerOpen(false);
+      setSelectedItemIndex(null);
+    } else {
+      // Handle error - Place not found in custom places
+      toast.info('Sorry, the selected place is not available. Please choose a place from the suggestion list.');
+    }
   };
+
   const handleWholeSaveItenory = () => {
-    console.log(itinerary);
-  
-    // Use the callback function with setItems to ensure the latest state
+    // Get the current date
+    const currentDate = moment().format('YYYY-MM-DD');
+    // Show toast message for creation date
+    toast.success(`${currentDate} is created`);
+
     setItems(itinerary);
-  
-    // Reset other state variables
-    setSelectedEndTime('00:00');
-    setSelectedStartTime('00:00');
+    setShow(!show);
+    setStartValue(null);
+    setEndValue(null);
     setSelectedItemIndex(null);
   };
-  
 
-  const handleTimeChange = (selectedItemIndex) => {
+  const handleTimeChange = () => {
     if (selectedItemIndex !== null) {
-      setItinerary((prevItinerary) =>
+      setItinerary(prevItinerary =>
         prevItinerary.map((eachitem, i) => ({
           ...eachitem,
-          startTime: selectedItemIndex === i ? selectedStartTime : eachitem.startTime,
-          endTime: selectedItemIndex === i ? selectedEndTime : eachitem.endTime,
+          startTime:
+            i === selectedItemIndex && startValue
+              ? startValue.format('HH:mm')
+              : eachitem.startTime,
+          endTime:
+            i === selectedItemIndex && endValue
+              ? endValue.format('HH:mm')
+              : eachitem.endTime,
         }))
       );
-      setSelectedEndTime('00:00');
-      setSelectedStartTime('00:00');
+
+      setStartValue(null);
+      setEndValue(null);
       setSelectedItemIndex(null);
     }
   };
 
-  const handleSelectPlace = (selectedPlace) => {
-     onSelectPlace(selectedPlace);
+  const handleRangeChange = values => {
+    setStartValue(values[0]);
+    setEndValue(values[1]);
+  };
+
+  const handleSelectPlace = selectedPlace => {
+    onSelectPlace(selectedPlace);
+  };
+
+  const handleTimePickerOk = () => {
+    if (startValue && endValue) {
+      handleTimeChange();
+    }
   };
 
   return (
     <div>
-      {Array.isArray(itinerary) && itinerary.length > 0 ? (
+      {itinerary.length > 0 ? (
         itinerary.map((item, index) => (
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '28vh',borderRadius:'15px' }}>
-          <Card key={index} style={{ width: '25rem', margin: '10px',backgroundColor:'#40A2E3',color:'#F1FADA',borderRadius:'15px'}}>
-            <Card.Body>
-              <Card.Title  style={{ fontSize: '16px' }}>{item.place ? item.place : 'No Place'}</Card.Title>
-              <Card.Text>
-                {selectedItemIndex === index ? (
-                  <div>You are currently editing the time</div>
-                ) : (
+          <div className="container-display-page5" key={index}>
+            <Card className="card-display-page5">
+              <Card.Body>
+                <div className="card-inner-page5">
                   <div>
-                    {item.startTime && item.endTime ? (
-                      <p>
-                        Start Time: {item.startTime} | End Time: {item.endTime}
-                      </p>
-                    ) : (
-                      <div>You haven't selected any time</div>
-                    )}
+                    <Card.Title className="card-display-title-page5">
+                      {item.place || 'No Place'}
+                    </Card.Title>
+                    <Card.Text className="card-text">
+                      {selectedItemIndex === index ? (
+                        <div className="card-display-text-page5">
+                          You are currently editing the time
+                        </div>
+                      ) : (
+                        <div className="card-display-text-page5">
+                          {item.startTime && item.endTime ? (
+                            <p>
+                              Start Time:{' '}
+                              {moment(item.startTime, 'HH:mm').format(
+                                'HH:mm'
+                              )}{' '}
+                              | End Time:{' '}
+                              {moment(item.endTime, 'HH:mm').format(
+                                'HH:mm'
+                              )}
+                            </p>
+                          ) : (
+                            <div className="card-display-text-page5">
+                              You haven't selected any time
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </Card.Text>
+                  </div>
+
+                  <div className="card-display-button-container-page5">
+                    <div className="icon-container">
+                      <Tooltip placement="topRight" title="Set Time">
+                        <AccessTimeIcon
+                          onClick={() => {
+                            setSelectedItemIndex(index);
+                            setIsTimePickerOpen(true);
+                          }}
+                          className="time-icon"
+                        />
+                      </Tooltip>
+                    </div>
+                    <Tooltip placement="topRight" title="Delete Item">
+                      <DeleteOutlineIcon
+                        onClick={() => handleDeleteCard(index, item)}
+                      />
+                    </Tooltip>
+                  </div>
+                </div>
+                {selectedItemIndex === index && (
+                  <div className="timing-info-page5">
+                    <div>
+                      <TimePicker.RangePicker
+                        value={[startValue, endValue]}
+                        onChange={handleRangeChange}
+                        format="HH:mm"
+                        placeholder={['Start Time', 'End Time']}
+                        open={isTimePickerOpen}
+                        onOpenChange={setIsTimePickerOpen}
+                        onOk={handleTimePickerOk}
+                      />
+                    </div>
+                    <div>
+                      <Button
+                        type="primary"
+                        style={{
+                          backgroundColor: '#FAEF9B',
+                          border: '1px solid black',
+                          color: 'black',
+                          borderRadius: '2vh',
+                          marginLeft: '3vw',
+                          height: '5vh',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                        onClick={handleTimeChange}
+                      >
+                        Set Time
+                      </Button>
+                    </div>
                   </div>
                 )}
-                
-              </Card.Text>
-
-              <Button
-                style={{backgroundColor:'white', marginRight:'10px',color:"black"}}
-                onClick={() => {
-                  setSelectedItemIndex(index);
-                }}
-              >
-                Set Time
-              </Button>
-
-              <Button variant='danger' onClick={() => handleDeleteCard(index,item)}>
-                Delete Item
-              </Button>
-            </Card.Body>
-          </Card>
-          <FontAwesomeIcon icon={faLocationDot} />
+              </Card.Body>
+            </Card>
           </div>
         ))
-      ) : (
-        <div className='iteminfo'>No items available</div>
+      ) : ( 
+        <div className="iteminfo">No items available</div>
       )}
 
-      {/* Time Picker Dialog */}
-      {selectedItemIndex !== null && (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '20vh' ,borderRadius:'15px',margin:'30px'}}>
-        <div style={{ width: '25rem',backgroundColor:'#40A2E3',color:'#40A2E3',borderRadius:'15px',marginBottom:"30px"}}>
-          <h6 style={{fontSize:"16px",color:"white",marginBottom:"10px",margin:"10px"}}><span style={{color:'red'}}>Set Time for </span><br/>{itinerary[selectedItemIndex].place}</h6>
-          <div style={{color:'#F1FADA'}}>
-          <div>
-            <label>Start Time: </label>
-            <input
-              type='time'
-              value={selectedStartTime}
-              style={{borderRadius:'5px'}}
-              onChange={(e) => setSelectedStartTime(e.target.value)}
-            />
-          </div>
-          <div>
-            <label style={{marginRight:'4px'}}>End Time :</label>
-            <input
-              type='time'
-              value={selectedEndTime}
-              style={{borderRadius:'5px'}}
-              onChange={(e) => setSelectedEndTime(e.target.value)}
-            />
-          </div>
-          <div>
-          <Button  style={{backgroundColor:'white', marginTop:'7px',display:'flex',justifyContent:'flex-start',alignContent:'flex-start',marginLeft:'150px',marginBottom:'10px',color:'black'}} onClick={() => handleTimeChange(selectedItemIndex)}>
-            Save Time
-          </Button>
-          </div>
-        </div>
-
-        </div>
-        </div>
+      {show && (
+        <SearchBox
+          selectedPlaces={selectedPlaces}
+          suggestionList={suggestionList}
+          onSelectPlace={handleSelectPlace}
+          setNewPlace={setNewPlace}
+          newPlace={newPlace}
+        />
       )}
 
-      
+      <div className="setplaces-buttons-page5">
+        <div className="button1-page5" onClick={handleSaveItenory}>
+          Set Place
+        </div>
 
-    {/*  <input
-        type='text'
-        placeholder='Add a Place'
-        value={newPlace || ''}
-        onChange={(e) => setNewPlace(e.target.value)}
-        style={{
-          padding: '10px',
-          margin: '5px',
-          fontSize: '16px',
-          width: '300px',
-          borderRadius: '5px',
-          border: '1px solid #ccc',
-        }}
-    />  */}
-
-    <SearchBox   selectedPlaces={selectedPlaces}
-    suggestionList={suggestionList}
-    onSelectPlace={handleSelectPlace}
-    setNewPlace={setNewPlace}
-    newPlace={newPlace}
-    />
-
-     <Button
-        onClick={handleSaveItenory}
-        style={{
-          cursor: 'pointer',
-          color: 'white',
-          padding: '10px 12px',
-          borderRadius: '4px',
-          marginLeft: '10px',
-        }}
-      >
-        Set Place
-    </Button>    
-
-
-      <Button
-        onClick={handleWholeSaveItenory}
-        style={{
-          cursor: 'pointer',
-          color: 'white',
-          padding: '10px 12px',
-          borderRadius: '4px',
-          marginLeft: '10px',
-        }}
-      >
-        Make Day
-      </Button>
+        <div className="button2-page5" onClick={handleWholeSaveItenory}>
+          {show ? 'Make Day' : 'Edit-Day'}
+        </div>
+      </div>
     </div>
   );
 };

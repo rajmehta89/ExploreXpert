@@ -2,87 +2,153 @@ import React, { useState, useEffect } from "react";
 import "./Home.css";
 import Header from "../Header/Header";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import SearchBox from "./SearchBox";
+import search from '../Assets/search.svg';
+import calender from '../Assets/calendar.png'
+import location from '../Assets/location1.png'
 
 const MainContent = () => {
     const navigate = useNavigate();
-    const currentDate = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
-
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+    const currentDate = new Date();
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
     const [selectPosition, setSelectPosition] = useState(null);
-    const [selectedItem,setSelectedItem]=useState(null);
-    
+    const [selectedItem, setSelectedItem] = useState(null);
+    const [showStartDatePicker, setShowStartDatePicker] = useState(false); // State to control visibility of start date picker
+    const [showEndDatePicker, setShowEndDatePicker] = useState(false); // State to control visibility of end date picker
 
-    const handleStartDateChange = (e) => {
-        const newStartDate = e.target.value;
-        setStartDate(newStartDate);
-        if (newStartDate > endDate) {
-            setStartDate(newStartDate);
+    const handleStartDateChange = (date) => {
+        if (date >= currentDate) {
+            setStartDate(date);
+            setShowStartDatePicker(false); // Close the start date picker when a valid date is selected
+        } else {
+            // Display error message or handle invalid date selection
+            toast.error("Start date cannot be less than today's date");
         }
     };
 
-    const handleEndDateChange = (e) => {
-        const newEndDate = e.target.value;
-        if (newEndDate >= startDate) {
-            setEndDate(newEndDate);
+    const handleEndDateChange = (date) => {
+        if (date >= startDate || !startDate) {
+            setEndDate(date);
+            setShowEndDatePicker(false); // Close the end date picker when a valid date is selected
+        } else {
+            // Display error message or handle invalid date selection
+            toast.error("End date cannot be less than the start date");
         }
     };
 
-    const buttonOnClickHandler = () => {
-        console.log(selectPosition);
-        localStorage.setItem('selectedItem',JSON.stringify(selectedItem));
-        navigate('/MyMap');
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        localStorage.setItem('selectedItem', JSON.stringify(selectedItem));
+        localStorage.setItem('startDate', startDate);
+        localStorage.setItem('endDate', endDate);
+        console.log(selectedItem);
+        const name=selectedItem.name;
+        toast.info(`Searching ${name}`);
+        
+        try {
+            // Data to be sent to the server
+            const dataToSend = {
+                selectedItem: selectedItem,
+                startDate: startDate,
+                endDate: endDate
+            };
+
+            // Get token from local storage
+            const token = localStorage.getItem("token");
+
+            // Headers containing the JWT token for authentication
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
+
+            // Backend API endpoint URL
+            const apiUrl = 'http://localhost:3001/user/api/storeData';
+
+            // Making a POST request to the server
+            const response = await axios.post(apiUrl, dataToSend, { headers });
+
+            // If the token is verified and data is stored successfully
+            if (response.status === 200) {
+                console.log('Data stored successfully!');
+                // Navigate to '/MyMap' or do something else
+                navigate("/Map");
+            } else {
+                console.error('Failed to store data.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
-        <div className="main-back1">
+        <div className="main-back2">
             <Header />
             <section className="hero-wrap">
                 <div className="container1">
                     <div className="row no-gutters align-items-center justify-content-center">
-                        <div className="text-center pb-5 overall">
-                            <div className="row justify-content-center">
-                                <div className="col-lg-9 overall-top">
-                                    <h1 className="city">Let's Explore Your Awesome City</h1>
-                                    <p>Find great places to stay, eat, shop, or visit from local experts.</p>
-                                </div>
-                            </div>
-
-                            <div className="overall-bottom">
-                           
-                                <form action="../Search/search1.html" className="search1 mt-md-5" method="GET">
-                                <div>
-                                <SearchBox selectPosition={selectPosition} setSelectPosition={setSelectPosition}  selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
-                                </div>  
-                                    <div className="container2">
-                                   
-                                        <div className="col-md d-flex">
-                                            <div className="form-field1 p-3">
-   {/* <input type="text" id="searchBox" className="form-control1" placeholder="Search Location" />  */}
-                                       
-                                                <input type="date" className="form-control1" placeholder="Start Date" value={startDate} onChange={handleStartDateChange} min={currentDate} />
-                                                <input type="date" className="form-control1" placeholder="End Date" value={endDate} min={startDate} onChange={handleEndDateChange} />
-                                                <select name="" id="" className="form-control1">
-                                                    <option value="">All Categories</option>
-                                                    <option value="">Food &amp; Drinks</option>
-                                                    <option value="">Hotel</option>
-                                                    <option value="">Shopping</option>
-                                                    <option value="">Beauty</option>
-                                                    <option value="">Fitness</option>
-                                                    <option value="">Bar &amp; Club</option>
-                                                    <option value="">Games</option>
-                                                    <option value="">Places</option>
-                                                    <option value="">Circus</option>
-                                                    <option value="">Theater</option>
-                                                    <option value="">Sports</option>
-                                                    <option value="">Health</option>
-                                                </select>
-                                                <a href="#" className="btn btn-primary form-control1" onClick={buttonOnClickHandler}><span>Search</span></a>
-                                            </div>
+                        <div className="text-center pb-5 overall ">
+                            <h1 className="showcase-title1">
+                                Discover the most engaging places
+                            </h1>
+                            <div className="showcase-search3">
+                                <div className="filters3">
+                                    <div className="filter3">
+                                        <div className="search-icon3">
+                                            <img src={location} alt="" />
+                                        </div>
+                                        <div className="search-text3">
+                                            <h4>Location</h4>
+                                            <h2>Explore</h2>
+                                            <SearchBox
+                                                selectPosition={selectPosition} setSelectPosition={setSelectPosition} selectedItem={selectedItem} setSelectedItem={setSelectedItem}
+                                            />
                                         </div>
                                     </div>
-                                </form>
+                                    <div className="filter3">
+                                        <div className="search-icon3">
+                                            <img src={calender} alt="" />
+                                        </div>
+                                        <div className="search-text3" onClick={() => setShowStartDatePicker(true)}>
+                                            <h4>From</h4>
+                                            <h2>{startDate ? startDate.toDateString() : "Choose a date"}</h2>
+                                            {showStartDatePicker && (
+                                                <DatePicker
+                                                    selected={startDate}
+                                                    onChange={handleStartDateChange}
+                                                    withPortal
+                                                    onClickOutside={() => setShowStartDatePicker(false)}
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="filter3">
+                                        <div className="search-icon3">
+                                            <img src={calender} alt="" />
+                                        </div>
+                                        <div className="search-text3" onClick={() => setShowEndDatePicker(true)}>
+                                            <h4>To</h4>
+                                            <h2>{endDate ? endDate.toDateString() : "Choose a date"}</h2>
+                                            {showEndDatePicker && (
+                                                <DatePicker
+                                                    selected={endDate}
+                                                    onChange={handleEndDateChange}
+                                                    withPortal
+                                                    onClickOutside={() => setShowEndDatePicker(false)}
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="search-button-icon3" onClick={handleSearch}>
+                                        <img src={search} alt="" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

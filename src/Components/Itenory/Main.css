@@ -1,0 +1,83 @@
+.main-container-page5{
+    background-color:white;
+    padding-left: 0;
+    padding-right: 0;
+
+}
+
+.upper-container-page5{
+width:100%;
+height:40%;
+background-image:url("../Assets/Travelback.jpg");
+background-position: center;
+position: relative;
+filter: blur(0.5px);
+background-size: cover;
+background-repeat: no-repeat;
+font-family: 'Poppins',sans-serif;
+font-weight: 600;
+}
+
+.left-side-page5{
+    padding-left: 0;
+    padding-right: 0;
+}
+.upper-container-placeinfo-page5{
+position: relative;
+display: flex;
+flex-direction: column;
+
+}
+
+.upper-container-placeinfo-page5 p{
+    margin-top: 5vw;  
+    margin-left: 7vw;
+    font-size: 8vw;
+    background-color: transparent;
+}
+
+.map-container-page5{
+   padding-left: 0;
+   padding-right: 0;
+}
+.day-tag-page5{
+        display: inline-block;
+        background-color: transparent;
+        padding: 8px;
+        margin: 4px;
+        border-radius: 5px;
+}
+
+.down-container-page5{
+    margin-left: 5vw;
+    margin-right:5vw;
+    margin-top: 5vw;
+    margin-bottom: 0;
+}
+
+@media (max-width: 560px) {
+    .left-side-page5,
+    .map-container-page5 {
+      width: 100%;
+    }
+
+    .upper-container-page5{
+        width: 100%;
+     height: fit-content;
+        background-image:url("../Assets/Travelback.jpg");
+        background-position: center;
+        position: relative;
+        filter: blur(0.5px);
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+  
+  }
+  .left-side-page5 {
+    overflow: auto; /* or overflow: scroll; */
+  }
+  
+  .map-container-page5 {
+    overflow: hidden;
+  }
+  

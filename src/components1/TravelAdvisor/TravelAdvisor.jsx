@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { CssBaseline, Grid } from '@material-ui/core';
+import { CssBaseline, Grid ,Button} from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { getPlacesData, getWeatherData } from '../../api/travelAdvisorAPI';
-import Header from '../Header/Header';
+import { MapContainer, TileLayer } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+
+import Header from '../../Components/Header/Header.jsx';
 import List from '../List/List';
 import Map from '../Map/Map';
+import axios from 'axios';
 
 const App = () => {
   const [type, setType] = useState('restaurants');
@@ -13,7 +18,6 @@ const App = () => {
   const [coords, setCoords] = useState({});
   const [bounds, setBounds] = useState(null);
 
-
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [places, setPlaces] = useState([]);
 
@@ -21,37 +25,51 @@ const App = () => {
   const [childClicked, setChildClicked] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-      const placeToGo = localStorage.getItem('selectedItem');
-      const retrivedplaceToGo = JSON.parse(placeToGo);
-      console.log(retrivedplaceToGo);
-      console.log(`latitude`, retrivedplaceToGo.lat);
-      console.log(`longitude`, retrivedplaceToGo.lon);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error('No token found');
+          return;
+        }
+        const headers = {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        };
+        const response = await axios.get('http://localhost:3001/user/api/getSelectedItem', { headers });
+        
+        if (response.status === 200) {
+          const data = response.data.data;
+          console.log('User data fetched successfully:', data);
+          
+          if (data.selectedItems && data.selectedItems.length > 0) {
+            const latitude = parseFloat(data.selectedItems[0].lat);
+            const longitude = parseFloat(data.selectedItems[0].lon);
+            setCoords({ lat: latitude, lng: longitude });
+          } else {
+            console.error('No selected items found in the response:', data);
+          }
+        } else {
+          console.error('Failed to fetch user data:', response.data.error);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
     
-      // Parse strings to numbers before setting the coordinates
-      const latitude = parseFloat(retrivedplaceToGo.lat);
-      const longitude = parseFloat(retrivedplaceToGo.lon);
+    fetchData();
+  }, []); 
     
-      setCoords({ lat: latitude, lng: longitude });
-    }, []);
-    
-    
-
-    useEffect(() => {
-      console.log('Coordinates set:', coords);
-      // You can perform additional actions based on the updated coords here
-    }, [coords]);
-
-     
-  // const placeToGo=localStorage.getItem('selectedItem');
-  // const retrivedplaceToGo=JSON.parse(placeToGo);
-  // setCoords({ lat: retrivedplaceToGo.latitude, lng: retrivedplaceToGo.longitude });
+  useEffect(() => {
+    console.log('Coordinates set:', coords);
+    // You can perform additional actions based on the updated coords here
+  }, [coords]);
 
   useEffect(() => {
     const filtered = places.filter((place) => Number(place.rating) > rating);
-
     setFilteredPlaces(filtered);
   }, [rating]);
 
@@ -59,11 +77,8 @@ const App = () => {
     if (bounds) {
       setIsLoading(true);
 
-    
-
       getPlacesData(type, bounds.sw, bounds.ne)
         .then((data) => {
-
           setPlaces(data.filter((place) => place.name && place.num_reviews > 0));
           console.log(places);
           setFilteredPlaces([]);
@@ -78,20 +93,18 @@ const App = () => {
   const onPlaceChanged = () => {
     const lat = autocomplete.getPlace().geometry.location.lat();
     const lng = autocomplete.getPlace().geometry.location.lng();
-
     setCoords({ lat, lng });
   };
 
-  const handleItenorySection=()=>{
-     navigate("/Itenory");
+  const handleItenorySection = () => {
+    toast.success("Creating Itinerary");
+    navigate("/Itinerary");
   }
 
   return (
-    <>
-      
-    {/*<button onClick={handleItenorySection} value="make Itenory" style={{backgroundColor:'blue',width:'200px',color:'white',height:'50px'}}/> */}
+    <div style={{ background: 'linear-gradient(to bottom right, #161616, #2c3e50)', minHeight: '100vh'}}>
+      <Header />
       <CssBaseline />
-      <Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} />
       <Grid container spacing={3} style={{ width: '100%' }}>
         <Grid item xs={12} md={4}>
           <List
@@ -111,11 +124,13 @@ const App = () => {
             setCoords={setCoords}
             coords={coords}
             places={filteredPlaces.length ? filteredPlaces : places}
-
           />
         </Grid>
+        <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' ,width:'4vw'}}>
+          <Button variant="contained" color="primary" onClick={handleItenorySection}>Create Itinerary</Button>
+        </Grid>
       </Grid>
-    </>
+    </div>
   );
 };
 

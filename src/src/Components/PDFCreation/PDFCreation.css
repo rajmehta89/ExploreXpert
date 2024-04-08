@@ -1,0 +1,85 @@
+.pdfheader{
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    justify-content: center;
+    align-items: center;
+    color:white;
+    margin-bottom: 30px;
+}
+
+.pdfheader h1{
+    margin:30px auto;
+}
+
+.pdfheader p{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+
+.pdfmain h2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px auto;
+}
+
+
+.pdftravelinfo{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    row-gap:30px;
+}
+
+.pdftravelinfo p{
+    color: red;
+}
+
+
+.pdftravelinfo h3{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.pdftable{
+    color: #1890ff;
+    border: 1px solid #ddd;
+
+}
+
+.pdftable .ant-table-cell,
+.pdftable .ant-table-thead th {
+  text-align: center !important;
+}
+
+.pdfmain .dayheader{
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+}
+  
+  
+.pdfsavebutton{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: center;
+    margin:30px auto;
+}
+
+.pdfsavebutton button{
+  color: white;
+  padding: 10px;
+  background-color: grey;
+}
+
+.pdfmaincontainer{
+    overflow-y: scroll;
+}

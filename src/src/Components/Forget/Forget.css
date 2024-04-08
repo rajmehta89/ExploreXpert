@@ -1,0 +1,57 @@
+/* Add this to your existing CSS file or create a new one */
+
+.forget-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    background-color: #E6E2DD;
+    width: 100%;
+    padding: 20px;
+    height: auto;
+    /* Adjusted height for responsiveness */
+    border-radius: 20px;
+}
+
+.forget-container .input {
+    margin-bottom: 15px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    width: 80%;
+    /* Adjusted width for responsiveness */
+    background: #eaeaea;
+    border-radius: 8px;
+}
+
+.forget-container img {
+    margin: 10px 20px;
+    /* Adjusted margin for responsiveness */
+}
+
+.forget-container input {
+    height: 45px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #797979;
+    font-size: 19px;
+    text-align: center;
+    /* Center text horizontally */
+}
+
+.forget-container button {
+    width: 200px;
+    padding: 10px;
+    background-color: #DEB992;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.forget-container button:hover {
+    background-color: #D24545;
+    color: #E6BAA3;
+}

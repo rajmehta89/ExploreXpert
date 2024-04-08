@@ -1,0 +1,128 @@
+/* Home.css */
+
+.main-back1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("../Assets/back.jpeg");
+
+}
+
+.hero-wrap {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+}
+
+.container1 {
+  position: relative;
+  z-index: 1; /* Ensure content is above overlay */
+}
+
+.slider-text1 {
+  padding: 100px 0;
+}
+
+.slider-text1 h1 {
+  font-size: 40px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.slider-text1 p {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 40px;
+}
+
+.search-property-1 {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.search-property-1 .form-group1 {
+  margin-bottom: 10px;
+}
+
+.search-property-1 .form-field1 {
+  position: relative;
+}
+
+.search-property-1 .form-field1 .icon1 {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+}
+
+.search-property-1 input[type="text"],
+.search-property-1 select {
+  padding-left: 40px;
+}
+
+.search-property-1 .btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.search-property-1 .btn-primary:hover {
+  background-color: #0056b3;
+}
+.city{
+  color: white;
+  font-weight: bolder;
+  font-size:8vh;
+}
+.overall
+{
+  width: auto;
+  margin-top: 8%;
+}
+/* Home.css */
+
+/* Styles for the form container */
+.search-property-1 {
+  background-color: rgba(255, 255, 255, 0.9); /* Adjust opacity as needed */
+  padding: 15px; /* Reduce padding */
+  border-radius: 5px; /* Reduce border radius */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  display: flex; /* Use flexbox to align items */
+  align-items: center; /* Center vertically */
+}
+
+/* Styles for form inputs and select */
+.search-property-1 input[type="text"],
+.search-property-1 select {
+  flex: 1; /* Take remaining space */
+  padding: 10px; /* Adjust padding */
+  margin-right: 10px; /* Add some space between elements */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Styles for form button */
+.search-property-1 .btn-primary {
+  padding: 10px; /* Adjust padding */
+  border-radius: 5px;
+  cursor: pointer;
+}

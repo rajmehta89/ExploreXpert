@@ -1,0 +1,433 @@
+/* Home.css */
+
+/* Background styling */
+/* CSS */
+/* Background styling */
+.main-back2 {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../Assets/world4.png");
+}
+
+/* City styling */
+.city {
+    font-size: 50px; /* Set font size to 50px */
+    font-weight: bold; /* Set font weight to bold */
+    color: white; /* Adjust color as needed */
+    font-family: 'Poppins', sans-serif; /* Set font family to Poppins with a fallback to sans-serif */
+    margin-bottom: 20px;
+}
+
+
+/* Text width */
+.text-width-page3 {
+    flex: 0 0 auto;
+}
+
+/* Hero wrap styling */
+.hero-wrap {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center center;
+}
+
+/* Overall container styling */
+.overall {
+    padding-bottom: 0 !important; /* Adjust as needed */
+    margin-top: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Text page styling */
+.text-page3 {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    width: 40%;
+    margin-left: 40%;
+    height: 100%; /* Optionally set height if needed */
+}
+
+/* Reset margin for the h2 element */
+.city-page3 {
+    margin: 0;
+    /* Add any additional styles for the text "Let" here */
+}
+
+/* Button styling */
+.inputs-page3-input1-button {
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    min-width: 150px;
+    border-radius: 10px;
+    /* Add any additional styles for the button here */
+}
+
+/* Input styling */
+.inputs-page3-input1 {
+    width: 100%;
+}
+
+/* Form container styling */
+.inputs-page3 {
+    display: flex;
+    flex-direction: row; /* Set row direction */
+    align-items: center;
+    justify-content: center; /* Center horizontally */
+}
+
+/* Search container styling */
+.search-page3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Outlined input styling */
+.outlined-input {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    height: 20px;
+}
+
+/* Text container styling */
+.text-container-page3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 50px;
+    margin-left: 35%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* Container 2 styling */
+.container2 {
+    /* background-color: white; Set background color for the container */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+/* Inputs search styling */
+.inputs-page3-inputs-search {
+    margin-top: 5px;
+}
+
+/* Custom outlined input styling */
+.customOutlinedInput {
+    height: 50px;
+    width: 200px;
+    background-color: transparent;
+    color: white;
+}
+
+/* Custom outlined input placeholder styling */
+.customOutlinedInput::placeholder {
+    color: white;
+}
+
+/* Responsive styling */
+@media screen and (max-width: 850px) {
+    .inputs-page3-input1-button {
+        display: flex;
+        height: 50px;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+        color: white;
+        min-width: 300px;
+        border-radius: 10px;
+    }
+
+    .main-back1 {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url("../Assets/search.jpeg");
+    }
+
+    .inputs-page3 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        column-gap: 0px;
+        width: 100vw;
+        height: 300px;
+        row-gap: 30px;
+    }
+
+    .text-container-page3 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0px;
+        width: 40%;
+        height: 35px;
+        margin-left: 35%;
+    }
+
+    .overall {
+        margin-top: 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .down-container-page3 {
+        height: 70vh;
+    }
+
+    .form-container-page3 {
+        margin-top: 160px;
+    }
+
+    .container2 {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-top: 52px;
+        width: 100vw;
+        padding: 0px;
+        height: 40vh;
+    }
+
+    .inputs-page3-inputs-search {
+        margin-top: 30px;
+    }
+}
+
+/* Custom search box input styling */
+.custom-search-box input[type="text"] {
+    border: 1px solid black;
+    color: black;
+    padding: 10px;
+}
+
+/* Custom search box input placeholder styling */
+.custom-search-box input[type="text"]::placeholder {
+    color: white;
+}
+
+.inputs-page3 {
+    display: flex;
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    gap: 20px; /* Add gap between form elements */
+    height: 100%; /* Match the height of the parent container */
+}
+
+.custom-search-box {
+    align-self: center; /* Align the search box in the center horizontally */
+}
+/* Adjust height for form components */
+.inputs-page3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Add gap between form elements */
+    height: auto; /* Reset height to auto */
+}
+
+/* Increase height of input fields */
+.custom-search-box input[type="text"] {
+    height: 50px; /* Set height to 50px */
+}
+
+/* Increase height of button */
+.inputs-page3-input1-button {
+    height: 50px; /* Set height to 50px */
+}
+
+/* Adjust height for text container */
+.text-container-page3 {
+    height: 50px; /* Set height to 50px */
+}
+.showcase-title1 {
+    visibility: visible;
+    opacity: 1;
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    transition: opacity 3s cubic-bezier(0.5, 0, 0, 1) 0s,
+                transform 3s cubic-bezier(0.5, 0, 0, 1) 0s;
+    font-weight:bolder;
+    font-size: 5vw;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+  }
+  
+  /* showcase CONTENT */
+.showcase-content3 {
+    text-align: center;
+    color: #fff;
+    font-size: 25px;
+  }
+  .showcase-content3 h1 {
+    margin-bottom: 42px;
+  }
+  .showcase-content3 a {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-top: 32px;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background: var(--primary-color);
+    padding: 1.8rem 2.4rem;
+    border-radius: 1.2rem;
+  }
+  
+  .showcase-content3 a:hover {
+    background: var(--primary-color);
+    opacity: 0.9;
+  }
+  
+  .showcase-search3 {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    padding-right: 1rem;
+    border-radius: 12px;
+    margin-top: 184px;
+  }
+  
+  .filters3 {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    flex-shrink: 10px;
+    flex: 10;
+    gap: 3rem;
+    cursor: pointer;
+  }
+  
+  .filter3 {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    line-height: 1.6;
+    gap: 1.5rem;
+    border-right: 1px solid rgba(194, 193, 193, 0.1);
+    padding-right: 1.5rem;
+  }
+  .filter3 h4 {
+    color: #5b5b5b;
+    font-weight: 300;
+  }
+  .filter3 h2 {
+    font-weight: 500;
+  }
+  .search-button-icon3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 1.5rem;
+    border-radius: 10px;
+  }
+  .search-button-icon3:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+  .search-text3{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+  }
+
+.search-text3 h4{
+    font: size 25px;
+}
+/* Increase font weight and font size */
+.showcase-title {
+    visibility: visible;
+    opacity: 1;
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    transition: opacity 3s cubic-bezier(0.5, 0, 0, 1) 0s,
+                transform 3s cubic-bezier(0.5, 0, 0, 1) 0s;
+    font-size: 60px; /* Increase font size */
+    font-weight: bolder; /* Set font weight to bolder */
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+/* Increase font size for h4 inside .search-text3 */
+.search-text3 h4 {
+    font-size: 15px; /* Set font size to 20px */
+}
+.search-text3 h2 {
+    font-size: 25px; /* Set font size to 20px */
+}
+.custom-search-box {
+    position: relative;
+  }
+  
+  .custom-search-box input {
+    height: 50px;
+    width: 270px;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  
+  .custom-search-box .suggestions {
+    position: absolute;
+    top: calc(100% + 10px); /* Adjust the top position as needed */
+    left: 0;
+    width: 100%;
+    max-height: 200px; /* Adjust the max-height as needed */
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  
+  .custom-search-box .suggestions li {
+    padding: 5px 0;
+    cursor: pointer;
+  }
+  
+  .custom-search-box .suggestions li:hover {
+    background-color: #f1f1f1;
+  }
+  .input-common {
+    width: 200px; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+    border: 1px solid black; /* Set border color */
+    background-color: transparent;
+    color: black;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  
+  

@@ -1,28 +1,59 @@
-// ResponsiveContainers.jsx
-
-import React,{useRef,useEffect,useState} from 'react';
-import './Try.css'; 
+import React, { useRef, useState, useEffect } from 'react';
+import './Try.css';
 import Container from './contaier';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import MarkunreadIcon from '@mui/icons-material/Markunread';
-import CropSquareIcon from '@mui/icons-material/CropSquare';
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-
-
+import { toast } from 'react-toastify'; 
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import axios from 'axios';
 
 const ResponsiveContainers = () => {
+  const [profile, setProfile] = useState(null);
   const pdfRef = useRef();
+  const [loading, setLoading] = useState(false);
+  const [showHeaderFooter, setShowHeaderFooter] = useState(false);
 
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
 
-  const downloadButton = () => {
+  const fetchProfileData = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('No token found');
+        return;
+      }
+      const headers = {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      };
+      const response = await axios.get('http://localhost:3001/user/api/profile', { headers });
+      const data = response.data;
+      console.log(data);
+      setProfile(data);
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+    }
+  };
+
+  const downloadButton = async () => {
     const input = pdfRef.current;
-    
-  
-    html2canvas(input, { scale: 2, logging: true, allowTaint: false, useCORS: true }).then(
-      (canvas) => {
-        const pdf = new jsPDF("l", "mm", "a4", true);
-        const imgData = canvas.toDataURL("image/png", 2.0); // Use 2.0 scale for higher resolution
+    // Toggle class to hide download button while generating PDF
+    input.classList.add('hide-download-button');
+
+    setLoading(true);
+    setShowHeaderFooter(true); // Show header and footer
+
+    // Add a delay to allow layout changes to take effect
+    setTimeout(() => {
+      html2canvas(input, {
+        scale: 2,
+        logging: true,
+        allowTaint: false,
+        useCORS: true,
+      }).then((canvas) => {
+        const pdf = new jsPDF('l', 'mm', 'a4', true);
+        const imgData = canvas.toDataURL('image/png', 2.0);
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
         const imgWidth = canvas.width;
@@ -30,54 +61,74 @@ const ResponsiveContainers = () => {
         const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
         const imgX = (pdfWidth - imgWidth * ratio) / 2;
         const imgY = (pdfHeight - imgHeight * ratio) / 2;
-  
-        pdf.addImage(imgData, "PNG", imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-        pdf.save("Ambition.pdf");
-      }
-    );
+        const name = profile?.user.username || '';
+        const place = profile?.user.selectedItems && profile.user.selectedItems.length > 0 ? profile.user.selectedItems[0].name : '';
+
+        pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+        pdf.save(`${name}_${place}.pdf`);
+
+        // Remove class to show download button again after PDF generation
+        input.classList.remove('hide-download-button');
+
+        setLoading(false);
+        setShowHeaderFooter(false);
+        toast.success('Itinerary Downloaded successfully!');
+    
+         // Hide header and footer after download
+      });
+    }, 500); // Adjust the delay as needed
   };
 
   return (
-
     <>
-   
-    <div className='pdfsavebutton-page6'>
-    <button
-              type="button"
-              class="btn btn-secondary"
-              onClick={downloadButton}
-            >
-              Download
-    </button>
-    </div>
+      <div ref={pdfRef}>
+        {showHeaderFooter && (
+          <>
+            {/* Header */}
+            <header className="pdfheader">
+              <div className="company-info">
+                <p className="company-name">ExploreXpert</p>
+                <p className="company-address">123 Adventure Road, Explorer City, Adventureland</p>
+                {/* Add any other company information here */}
+              </div>
+            </header>
+          </>
+        )}
 
-    <div ref={pdfRef}>
-    
-    <div className="pdfheader-page6">
-    <h1>Ambition Trip</h1>
-    <p>
-      <div>
-        <LocationOnIcon color="secondary" />SHOP NO – 2 Kabir Complex, next to Diamond trade centre, dalgiya maholla, Mahidharpura, surat.
-      </div>
-      <div style={{marginBottom:'2rem'}}>
-        <MarkunreadIcon color="secondary"/>EMAIL ID – rajm267747@gmail.com
-      </div>
-    </p>
-  </div>
+        <div className={`two-sided-container ${loading ? 'two-sided-disabled' : ''}`} style={{ marginBottom: showHeaderFooter ? '0' : '' }}>
+          <div className="left-side-page6">
+            {/* Your other content goes here */}
+          </div>
+          <div className="centered-text"></div>
+          <div className="right-side-page6">
+            {/* Content for the right side */}
+            <Container />
+          </div>
+        </div>
 
-    <div className="two-sided-container">
-      <div className="left-side-page6">
-        {/* Content for the left side */}
-        <div className="centered-text"></div>
-      </div>
-      <div className="right-side-page6">
-        {/* Content for the right side */}
+        {/* Download button placed between content and footer */}
+        <div className="pdfsavebutton-page6">
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={downloadButton}
+            disabled={loading}
+          >
+            {loading ? 'Downloading...' : 'Download'}
+          </button>
+        </div>
 
-        <Container/>
-
+        {showHeaderFooter && (
+          <footer className="pdffooter" style={{ marginTop: '0' }}>
+            <div className="footer-info">
+              <div className="footer-text">
+                <p>&copy; {new Date().getFullYear()} ExploreXpect. All rights reserved.</p>
+                <p>Designed with <span role="img" aria-label="love">❤</span> by ExploreXpect</p>
+              </div>
+            </div>
+          </footer>
+        )}
       </div>
-    </div>
-    </div>
     </>
   );
 };

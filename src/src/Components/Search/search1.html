@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Autocomplete</title>
+    <style>
+        #searchBox {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        
+        #suggestions {
+            display: none;
+            border: 1px solid #ccc;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        
+        .suggestion {
+            padding: 8px;
+            cursor: pointer;
+        }
+        
+        .suggestion:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <input type="text" id="searchBox" placeholder="Search for a place...">
+
+
+    <script>
+        function initAutocomplete() {
+            const searchBox = document.getElementById('searchBox');
+            const suggestionsContainer = document.getElementById('suggestions');
+            let autocomplete;
+
+            autocomplete = new google.maps.places.Autocomplete(searchBox);
+
+            autocomplete.addListener('place_changed', function() {
+                const place = autocomplete.getPlace();
+                // Handle the selected place, if needed
+                console.log(place);
+            });
+
+            searchBox.addEventListener('input', function() {
+                const query = searchBox.value;
+                if (query.length > 0) {
+                    // Make a request to the Google Places API for suggestions
+                    const service = new google.maps.places.AutocompleteService();
+                    service.getPlacePredictions({
+                        input: query
+                    }, function(predictions, status) {
+                        if (status === google.maps.places.PlacesServiceStatus.OK) {
+                            displaySuggestions(predictions);
+                        }
+                    });
+                } else {
+                    clearSuggestions();
+                }
+            });
+
+            function displaySuggestions(predictions) {
+                suggestionsContainer.innerHTML = '';
+                predictions.forEach(function(prediction) {
+                    const suggestion = document.createElement('div');
+                    suggestion.className = 'suggestion';
+                    suggestion.textContent = prediction.description;
+                    suggestion.addEventListener('click', function() {
+                        searchBox.value = prediction.description;
+                        suggestionsContainer.style.display = 'none';
+                    });
+                    suggestionsContainer.appendChild(suggestion);
+                });
+
+                suggestionsContainer.style.display = 'block';
+            }
+
+            function clearSuggestions() {
+                suggestionsContainer.innerHTML = '';
+                suggestionsContainer.style.display = 'none';
+            }
+        }
+    </script>
+
+    <!-- Include the Google Maps JavaScript API with the Places library -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete" async defer></script> -->
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places&callback=initAutocomplete" async defer></script>
+
+</body>
+
+</html>
