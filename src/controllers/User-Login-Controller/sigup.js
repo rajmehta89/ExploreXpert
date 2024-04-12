@@ -6,6 +6,7 @@ async function handlesignup(req, res) {
     const { username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    console.log('Sign Up');
     const newUser = new User({
         username,
         email,

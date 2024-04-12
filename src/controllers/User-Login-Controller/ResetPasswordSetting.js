@@ -10,8 +10,8 @@ const passwordResetTokens = new Map();
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'rajm267747@gmail.com',
-        pass: 'fdme nipf tfqj kpgt',
+        user: '21ituos032@ddu.ac.in',
+        pass: 'mlrl yeml rfok cdmx',
     },
 });
 
